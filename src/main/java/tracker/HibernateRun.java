@@ -63,7 +63,7 @@ public class HibernateRun {
     public static List<HbItem> findAll(SessionFactory sf) {
         Session session = sf.openSession();
         session.beginTransaction();
-        List result = session.createQuery("from ru.job4j.tracker.Item").list();
+        List result = session.createQuery("from tracker.HbItem").list();
         session.getTransaction().commit();
         session.close();
         return result;
