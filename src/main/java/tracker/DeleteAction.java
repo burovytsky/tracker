@@ -9,7 +9,7 @@ public class DeleteAction implements UserAction {
     @Override
     public boolean execute(Input input, Store memTracker) {
         String id = input.askStr("Enter the id of the item you want to delete: ");
-        if (memTracker.delete(id)) {
+        if (memTracker.delete(Integer.parseInt(id))) {
             System.out.println("Item deleted");
         } else {
             System.out.println("Error, item not found");

@@ -39,7 +39,7 @@ public class SqlTrackerTest {
     public void replace() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("name"));
-            String id = tracker.findByName("name").get(0).getId();
+            int id = tracker.findByName("name").get(0).getId();
             tracker.replace(id, new Item("newName"));
             assertThat(tracker.findById(id).getName(), is("newName"));
         }
@@ -49,7 +49,7 @@ public class SqlTrackerTest {
     public void delete() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("name"));
-            String id = tracker.findByName("name").get(0).getId();
+            int id = tracker.findByName("name").get(0).getId();
             tracker.delete(id);
             assertThat(tracker.findAll().size(), is(0));
         }
@@ -78,7 +78,7 @@ public class SqlTrackerTest {
     public void findById() throws Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
             tracker.add(new Item("name"));
-            String id = tracker.findByName("name").get(0).getId();
+            int id = tracker.findByName("name").get(0).getId();
             assertThat(tracker.findById(id).getName(), is("name"));
         }
     }

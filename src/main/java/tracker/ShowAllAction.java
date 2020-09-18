@@ -9,7 +9,7 @@ public class ShowAllAction implements UserAction {
     @Override
     public boolean execute(Input input, Store memTracker) {
         for (Item item : memTracker.findAll()) {
-            System.out.println(String.format("%s : %s", item.getName(), item.getId()));
+            System.out.println(String.format("%s : %d", item.getName(), item.getId()));
         }
         return true;
     }

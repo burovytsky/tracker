@@ -50,7 +50,7 @@ public class StartUITest {
         MemTracker memTracker = new MemTracker();
         Item item = new Item("new item");
         memTracker.add(item);
-        String[] answers = {item.getId(), "replaced item"};
+        String[] answers = {String.valueOf(item.getId()), "replaced item"};
         new EditAction().execute(new StubInput(answers), memTracker);
         Item replaced = memTracker.findById(item.getId());
         assertThat(replaced.getName(), is("replaced item"));
@@ -61,7 +61,7 @@ public class StartUITest {
         MemTracker memTracker = new MemTracker();
         Item item = new Item("new item");
         memTracker.add(item);
-        String[] answers = {item.getId()};
+        String[] answers = {String.valueOf(item.getId())};
         new DeleteAction().execute(new StubInput(answers), memTracker);
         Item replaced = memTracker.findById(item.getId());
         assertThat(replaced, is(nullValue()));

@@ -32,12 +32,12 @@ public class MemTracker implements Store {
         return itemsMatchingByName;
     }
 
-    private String generateId() {
+    private int generateId() {
         Random rm = new Random();
-        return String.valueOf(rm.nextLong() + System.currentTimeMillis());
+        return (int) (rm.nextLong() + System.currentTimeMillis());
     }
 
-    public Item findById(String id) {
+    public Item findById(int id) {
         Item rsl = null;
         int index = indexOfElement(id);
         if (index != -1) {
@@ -46,7 +46,7 @@ public class MemTracker implements Store {
         return rsl;
     }
 
-    public boolean replace(String id, Item item) {
+    public boolean replace(int id, Item item) {
         int index = indexOfElement(id);
         boolean rsl = false;
         if (index != -1) {
@@ -57,7 +57,7 @@ public class MemTracker implements Store {
         return rsl;
     }
 
-    public boolean delete(String id) {
+    public boolean delete(int id) {
         int index = indexOfElement(id);
         boolean rsl = false;
         if (index != -1) {
@@ -67,10 +67,10 @@ public class MemTracker implements Store {
         return rsl;
     }
 
-    private int indexOfElement(String id) {
+    private int indexOfElement(int id) {
         int rsl = -1;
         for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getId().equals(id)) {
+            if (items.get(i).getId() == (id)) {
                 rsl = i;
                 break;
             }
@@ -79,7 +79,7 @@ public class MemTracker implements Store {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
 
     }
 }
