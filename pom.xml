@@ -112,7 +112,7 @@
             <properties>
                 <db.url>jdbc:postgresql://localhost:5432/tracker</db.url>
                 <db.username>postgres</db.username>
-                <db.password></db.password>
+                <db.password>postgres</db.password>
                 <db.driver>org.postgresql.Driver</db.driver>
             </properties>
         </profile>
