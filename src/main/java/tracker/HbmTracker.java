@@ -7,7 +7,6 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HbmTracker implements Store, AutoCloseable {
@@ -19,7 +18,6 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public void init() {
-
     }
 
     @Override
@@ -34,29 +32,32 @@ public class HbmTracker implements Store, AutoCloseable {
 
     @Override
     public boolean replace(int id, Item item) {
-        boolean rsl = true;
-        Session session = sf.openSession();
-        session.beginTransaction();
-        item.setId(id);
-        if (session.get(Item.class, id) != null) {
+        boolean rsl = false;
+        if (findById(id) != null) {
+            Session session = sf.openSession();
+            session.beginTransaction();
+            item.setId(id);
             session.update(item);
-            rsl = false;
+            session.getTransaction().commit();
+            session.close();
+            rsl = true;
         }
-        session.getTransaction().commit();
-        session.close();
         return rsl;
     }
 
     @Override
     public boolean delete(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Item item = new Item(null);
-        item.setId(id);
-        session.delete(item);
-        session.getTransaction().commit();
-        session.close();
-        return findById(id) == null;
+        boolean rsl = false;
+        Item item = findById(id);
+        if (item != null) {
+            Session session = sf.openSession();
+            session.beginTransaction();
+            session.delete(item);
+            session.getTransaction().commit();
+            session.close();
+            rsl = true;
+        }
+        return rsl;
     }
 
     @Override
@@ -74,8 +75,7 @@ public class HbmTracker implements Store, AutoCloseable {
         Session session = sf.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from Item where name = :name");
-        query.setParameter("name", key);
-        List result = query.list();
+        List result = query.setParameter("name", key).list();
         session.getTransaction().commit();
         session.close();
         return result;
