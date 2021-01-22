@@ -1,6 +1,6 @@
 ## Tracker
 
-Console application- order manager 
+Console application - order manager 
 
 Used technologies 
 - Hibernate
